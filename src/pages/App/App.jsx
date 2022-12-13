@@ -3,23 +3,25 @@ import { Routes, Route } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 import './App.css';
 import AuthPage from '../AuthPage/AuthPage';
-import NewOrderPage from '../NewOrderPage/NewOrderPage';
-import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage';
 import NavBar from '../../components/NavBar/NavBar';
+import MyNotesList from '../MyNotesList/MyNotesList'
+import * as notesAPI from "../../utilities/notes-api"
 
 export default function App() {
   const [user, setUser] = useState(getUser());
+  const [notes, setNotes] = useState([]);
+
+  async function addNote(data) {
+    const note = await notesAPI.create(data)
+    setNotes([...notes, note])
+  }
 
   return (
     <main className="App">
       { user ?
           <>
             <NavBar user={user} setUser={setUser} />
-            <Routes>
-              {/* Route components in here */}
-              <Route path="/orders/new" element={<NewOrderPage />} />
-              <Route path="/orders" element={<OrderHistoryPage />} />
-            </Routes>
+            <MyNotesList notes={notes} setNotes={setNotes} addNote={addNote} />
           </>
           :
           <AuthPage setUser={setUser} />
