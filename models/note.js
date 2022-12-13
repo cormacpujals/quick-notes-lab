@@ -7,11 +7,12 @@ const noteSchema = new Schema({
     required: true,
   },
   user: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
 }, {
   timestamps: true
 });
 
-module.exports = mongoose.model('Category', categorySchema);
+module.exports = mongoose.model('Note', noteSchema);
