@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 import './App.css';
@@ -15,6 +15,14 @@ export default function App() {
     const note = await notesAPI.create(data)
     setNotes([...notes, note])
   }
+
+  useEffect(() => {
+    async function getNotes() {
+      const allNotes = await notesAPI.getAll();
+      setNotes(allNotes);
+    }
+    if (user) getNotes();
+  }, [])
 
   return (
     <main className="App">

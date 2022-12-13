@@ -1,8 +1,9 @@
 import NoteCard from "../../components/NoteCard/NoteCard"
 import { useState } from "react";
+import "./MyNotesList.css";
 
 export default function MyNotesList({notes, setNotes, addNote}) {
-  const noteCards = notes.map((n, idx) => <NoteCard note={n} keys={idx} />)
+  const noteCards = notes.map((n, idx) => <NoteCard note={n} key={idx} />)
   const [noteInfo, setNoteInfo] = useState({
     text: '',
   })
@@ -17,7 +18,7 @@ export default function MyNotesList({notes, setNotes, addNote}) {
   }
 
   return (
-    <>
+    <div className="myNotesList">
       {notes.length ?
       <>
         <h4>{noteCards}</h4>
@@ -36,7 +37,7 @@ export default function MyNotesList({notes, setNotes, addNote}) {
       </>
       :
       <>
-        <p>No notes yet!</p>
+        <p>No Notes Yet!</p>
         <label>Add a note:</label>
         <form onSubmit={handleSubmit}>
           <input 
@@ -51,7 +52,7 @@ export default function MyNotesList({notes, setNotes, addNote}) {
         </form>
       </>
       }
-    </>
+    </div>
   )
 
 }
